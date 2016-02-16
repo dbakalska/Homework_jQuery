@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Car Shop</title>
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/index.css">
+        <script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
+        <script>
+            $(window).ready(function () {
+                var carList = [];
+
+                $("button").on("click", function(event) {
+                    var brandField = $('#brand'),
+                        modelField = $('#model'),
+                        yearField = $('#year'),
+                        kmField = $('#km'),
+                        brand = brandField.val(),
+                        model = modelField.val(),
+                        year = yearField.val(),
+                        km = kmField.val(),
+                        hasError = false;
+
+                    $('.error').remove();
+
+                    checkRequiredField(brandField);
+                    checkRequiredField(modelField);
+
+                    if (checkRequiredField(yearField)) {
+                        isInt(yearField);
+                    }
+                    if (checkRequiredField(kmField)) {
+                        isInt(kmField);
+                    }
+
+                    function checkRequiredField (field){
+                        if ($(field).val() == '') {
+                            $(field).after('<span class="error">Field is required!</span>');
+                            hasError = true;
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+
+                    function isInt (field) {
+                        if (!$(field).val().match(/^\d+$/)) {
+                            $(field).after('<span class="error">Please enter positive integer only!</span>');
+                            hasError = true;
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+
+                    if (hasError) {
+                        event.preventDefault();
+                    } else {
+                        carList.push({
+                            "brand": brand,
+                            "model": model,
+                            "year": year,
+                            "km": km
+                        });
+
+                        var rowNumber = carList.length;
+                        var data = '<tr><td>' + rowNumber + '</td><td>' + brand + '</td><td>' +
+                                model +  '</td><td>' + year +  '</td><td>' + km + '</td><td>' +
+                                '<button id="edit">Edit</button><button id="remove">Remove</button></td></tr>';
+                        $('table').append(data);
+                        $(':input').val('');
+                        event.preventDefault();
+
+                    }
+
+                    $('table tr').find("#remove").on ('click', function () {
+                        var remove = confirm("Are you sure you want to delete this row?");
+                        if(remove == true) {
+                            $(this).closest('tr').fadeTo(300, 0, function () {
+                                $(this).remove();
+                            });
+                        }
+                    });
+                });
+
+
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <form action="" method="post">
+                <fieldset>
+                    <legend>Add a new car to the list</legend>
+                    <div>
+                        <label for="brand">Brand *</label>
+                        <input type="text" id="brand">
+                    </div>
+                    <div>
+                        <label for="model">Model *</label>
+                        <input type="text" id="model">
+                    </div>
+                    <div>
+                        <label for="year">Year of manufacture *</label>
+                        <input type="text" id="year">
+                    </div>
+                    <div>
+                        <label for="km">Kilometres *</label>
+                        <input type="text" id="km">
+                    </div>
+                    <button type="submit">Add car</button>
+                    <p>* Required field</p>
+                </fieldset>
+            </form>
+        </div>
+        <table id="car-list">
+            <caption>Car List</caption>
+                <tr>
+                    <th>#</th>
+                    <th>Brand</th>
+                    <th>Model</th>
+                    <th>Year of manufacture</th>
+                    <th>Kilometres</th>
+                    <th>Actions</th>
+                </tr>
+        </table>
+    </body>
+</html>

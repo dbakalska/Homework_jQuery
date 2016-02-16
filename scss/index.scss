@@ -1,0 +1,82 @@
+$bgr: #C6A1A2;
+$text: #4d4a37;
+$font: Helvetica, sans-serif;
+$font-size-h: 1.2em;
+$font-size-all: 1.05em;
+$form-margin: 0 15px 10px;
+@import '_mixins';
+
+body {
+  background: $bgr;
+  color: $text;
+  font: $font;
+}
+
+form {
+  border: 2px solid $text;
+  @include border-radius(10px);
+  padding: 0.5em;
+  margin: 50px;
+  width: 240px;
+
+  legend {
+    font-weight: bold;
+    font-size: $font-size-h;
+    margin: $form-margin;
+  }
+
+  label {
+    font-size: $font-size-all;
+  }
+  
+   div, button, p {
+     margin: 0 25px 10px;
+  }
+
+  button {
+    @include border-radius(5px);
+    margin-left: 135px;
+  }
+
+  input {
+    @include border-radius(5px);
+  }
+}
+
+table {
+  border-collapse: collapse;
+  margin: 50px;
+  padding: 0.5em;
+
+  caption {
+    font-weight: bold;
+    font-size: $font-size-h;
+    margin: $form-margin;
+  }
+
+  th {
+    font-size: $font-size-all;
+    padding: 0.5em;
+    border-bottom: 1px solid #8d8765;
+  }
+
+  tr {
+    @extend th;
+    text-align: center;
+    //border: 1px double $text;
+
+  }
+
+  td {
+    padding: 0.3em;
+  }
+
+  button {
+    @include border-radius(5px);
+  }
+}
+
+
+
+
+
